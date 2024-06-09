@@ -1,4 +1,5 @@
 import { CustomerUpdateManyWithoutAddressesInput } from "./CustomerUpdateManyWithoutAddressesInput";
+import { InputJsonValue } from "../../types";
 
 export type AddressUpdateInput = {
   address_1?: string | null;
@@ -6,5 +7,6 @@ export type AddressUpdateInput = {
   city?: string | null;
   customers?: CustomerUpdateManyWithoutAddressesInput;
   state?: string | null;
+  tmpFile?: InputJsonValue;
   zip?: number | null;
 };

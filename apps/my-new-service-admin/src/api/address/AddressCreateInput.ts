@@ -1,4 +1,5 @@
 import { CustomerCreateNestedManyWithoutAddressesInput } from "./CustomerCreateNestedManyWithoutAddressesInput";
+import { InputJsonValue } from "../../types";
 
 export type AddressCreateInput = {
   address_1?: string | null;
@@ -6,5 +7,6 @@ export type AddressCreateInput = {
   city?: string | null;
   customers?: CustomerCreateNestedManyWithoutAddressesInput;
   state?: string | null;
+  tmpFile?: InputJsonValue;
   zip?: number | null;
 };

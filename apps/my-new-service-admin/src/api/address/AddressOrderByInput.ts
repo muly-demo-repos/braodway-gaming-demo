@@ -7,6 +7,7 @@ export type AddressOrderByInput = {
   createdAt?: SortOrder;
   id?: SortOrder;
   state?: SortOrder;
+  tmpFile?: SortOrder;
   updatedAt?: SortOrder;
   zip?: SortOrder;
 };

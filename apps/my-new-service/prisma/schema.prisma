@@ -54,6 +54,7 @@ model Address {
   customers Customer[]
   id        String     @id @default(cuid())
   state     String?
+  tmpFile   Json?
   updatedAt DateTime   @updatedAt
   zip       Int?
 }

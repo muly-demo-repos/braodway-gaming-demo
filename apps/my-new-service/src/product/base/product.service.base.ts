@@ -15,6 +15,7 @@ import {
   Product as PrismaProduct,
   Order as PrismaOrder,
 } from "@prisma/client";
+import { OrderWhereUniqueInput } from "../../order/base/OrderWhereUniqueInput";
 
 export class ProductServiceBase {
   constructor(protected readonly prisma: PrismaService) {}
@@ -58,5 +59,8 @@ export class ProductServiceBase {
         where: { id: parentId },
       })
       .orders(args);
+  }
+  async CalcProductSales(args: OrderWhereUniqueInput): Promise<number> {
+    throw new Error("Not implemented");
   }
 }
