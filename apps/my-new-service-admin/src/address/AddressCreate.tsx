@@ -28,6 +28,7 @@ export const AddressCreate = (props: CreateProps): React.ReactElement => {
           <SelectArrayInput optionText={CustomerTitle} />
         </ReferenceArrayInput>
         <TextInput label="State" source="state" />
+        <div />
         <NumberInput step={1} label="Zip" source="zip" />
       </SimpleForm>
     </Create>

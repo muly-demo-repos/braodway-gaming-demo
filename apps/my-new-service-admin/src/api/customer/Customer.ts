@@ -8,6 +8,7 @@ export type Customer = {
   firstName: string | null;
   id: string;
   lastName: string | null;
+  metadata: string | null;
   orders?: Array<Order>;
   phone: string | null;
   updatedAt: Date;

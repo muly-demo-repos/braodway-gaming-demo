@@ -28,6 +28,7 @@ import { UpdateProductArgs } from "./UpdateProductArgs";
 import { DeleteProductArgs } from "./DeleteProductArgs";
 import { OrderFindManyArgs } from "../../order/base/OrderFindManyArgs";
 import { Order } from "../../order/base/Order";
+import { OrderWhereUniqueInput } from "../../order/base/OrderWhereUniqueInput";
 import { ProductService } from "../product.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => Product)
@@ -162,5 +163,13 @@ export class ProductResolverBase {
     }
 
     return results;
+  }
+
+  @graphql.Query(() => Number)
+  async CalcProductSales(
+    @graphql.Args()
+    args: OrderWhereUniqueInput
+  ): Promise<number> {
+    return this.service.CalcProductSales(args);
   }
 }

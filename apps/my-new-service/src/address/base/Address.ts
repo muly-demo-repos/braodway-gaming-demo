@@ -20,6 +20,9 @@ import {
 } from "class-validator";
 import { Type } from "class-transformer";
 import { Customer } from "../../customer/base/Customer";
+import { IsJSONValue } from "../../validators";
+import { GraphQLJSON } from "graphql-type-json";
+import { JsonValue } from "type-fest";
 
 @ObjectType()
 class Address {
@@ -91,6 +94,16 @@ class Address {
     nullable: true,
   })
   state!: string | null;
+
+  @ApiProperty({
+    required: false,
+  })
+  @IsJSONValue()
+  @IsOptional()
+  @Field(() => GraphQLJSON, {
+    nullable: true,
+  })
+  tmpFile!: JsonValue;
 
   @ApiProperty({
     required: true,

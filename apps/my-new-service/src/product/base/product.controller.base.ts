@@ -311,4 +311,21 @@ export class ProductControllerBase {
       select: { id: true },
     });
   }
+
+  @common.Get("/:id/calc-product-sales")
+  @swagger.ApiOkResponse({
+    type: Number,
+  })
+  @swagger.ApiNotFoundResponse({
+    type: errors.NotFoundException,
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
+  async CalcProductSales(
+    @common.Query()
+    query: OrderWhereUniqueInput
+  ): Promise<number> {
+    return this.service.CalcProductSales(query);
+  }
 }

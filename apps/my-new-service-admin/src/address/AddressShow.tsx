@@ -23,6 +23,7 @@ export const AddressShow = (props: ShowProps): React.ReactElement => {
         <DateField source="createdAt" label="Created At" />
         <TextField label="ID" source="id" />
         <TextField label="State" source="state" />
+        <TextField label="tmpFile" source="tmpFile" />
         <DateField source="updatedAt" label="Updated At" />
         <TextField label="Zip" source="zip" />
         <ReferenceManyField
@@ -43,6 +44,7 @@ export const AddressShow = (props: ShowProps): React.ReactElement => {
             <TextField label="First Name" source="firstName" />
             <TextField label="ID" source="id" />
             <TextField label="Last Name" source="lastName" />
+            <TextField label="Metadata" source="metadata" />
             <TextField label="Phone" source="phone" />
             <DateField source="updatedAt" label="Updated At" />
           </Datagrid>

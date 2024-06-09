@@ -65,6 +65,17 @@ class CustomerCreateInput {
 
   @ApiProperty({
     required: false,
+    type: String,
+  })
+  @IsString()
+  @IsOptional()
+  @Field(() => String, {
+    nullable: true,
+  })
+  metadata?: string | null;
+
+  @ApiProperty({
+    required: false,
     type: () => OrderCreateNestedManyWithoutCustomersInput,
   })
   @ValidateNested()

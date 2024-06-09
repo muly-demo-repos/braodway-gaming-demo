@@ -1,4 +1,5 @@
 import { Customer } from "../customer/Customer";
+import { JsonValue } from "type-fest";
 
 export type Address = {
   address_1: string | null;
@@ -8,6 +9,7 @@ export type Address = {
   customers?: Array<Customer>;
   id: string;
   state: string | null;
+  tmpFile: JsonValue;
   updatedAt: Date;
   zip: number | null;
 };
