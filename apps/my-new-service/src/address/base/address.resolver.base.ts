@@ -17,6 +17,8 @@ import * as nestAccessControl from "nest-access-control";
 import * as gqlACGuard from "../../auth/gqlAC.guard";
 import { GqlDefaultAuthGuard } from "../../auth/gqlDefaultAuth.guard";
 import * as common from "@nestjs/common";
+import { GraphQLUpload } from "graphql-upload";
+import { FileUpload } from "src/storage/base/storage.types";
 import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
 import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { Address } from "./Address";
@@ -142,6 +144,27 @@ export class AddressResolverBase {
       }
       throw error;
     }
+  }
+
+  @graphql.Mutation(() => Address)
+  async uploadTmpFile(
+    @graphql.Args({
+      name: "file",
+      type: () => GraphQLUpload,
+    })
+    file: FileUpload,
+    @graphql.Args()
+    args: AddressFindUniqueArgs
+  ): Promise<Address> {
+    return await this.service.uploadTmpFile(args, file);
+  }
+
+  @graphql.Mutation(() => Address)
+  async deleteTmpFile(
+    @graphql.Args()
+    args: AddressFindUniqueArgs
+  ): Promise<Address> {
+    return await this.service.deleteTmpFile(args);
   }
 
   @common.UseInterceptors(AclFilterResponseInterceptor)
