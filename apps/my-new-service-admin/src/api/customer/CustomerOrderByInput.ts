@@ -7,6 +7,7 @@ export type CustomerOrderByInput = {
   firstName?: SortOrder;
   id?: SortOrder;
   lastName?: SortOrder;
+  metadata?: SortOrder;
   phone?: SortOrder;
   updatedAt?: SortOrder;
 };

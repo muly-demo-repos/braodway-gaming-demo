@@ -237,6 +237,7 @@ export class AddressControllerBase {
         firstName: true,
         id: true,
         lastName: true,
+        metadata: true,
         phone: true,
         updatedAt: true,
       },
