@@ -15,9 +15,16 @@ import {
   Address as PrismaAddress,
   Customer as PrismaCustomer,
 } from "@prisma/client";
+import { LocalStorageService } from "src/storage/providers/local/local.storage.service";
+import { InputJsonValue } from "src/types";
+import { FileDownload, FileUpload } from "src/storage/base/storage.types";
+import { LocalStorageFile } from "src/storage/providers/local/local.storage.types";
 
 export class AddressServiceBase {
-  constructor(protected readonly prisma: PrismaService) {}
+  constructor(
+    protected readonly prisma: PrismaService,
+    protected readonly localStorageService: LocalStorageService
+  ) {}
 
   async count(args: Omit<Prisma.AddressCountArgs, "select">): Promise<number> {
     return this.prisma.address.count(args);
@@ -47,6 +54,62 @@ export class AddressServiceBase {
     args: Prisma.SelectSubset<T, Prisma.AddressDeleteArgs>
   ): Promise<PrismaAddress> {
     return this.prisma.address.delete(args);
+  }
+
+  async uploadTmpFile<T extends Prisma.AddressFindUniqueArgs>(
+    args: Prisma.SelectSubset<T, Prisma.AddressFindUniqueArgs>,
+    file: FileUpload
+  ): Promise<PrismaAddress> {
+    file.filename = `profilePicture-${args.where.id}.${file.filename
+      .split(".")
+      .pop()}`;
+    const containerPath = "/";
+    const tmpFile = await this.localStorageService.uploadFile(
+      file,
+      [],
+      1000000,
+      containerPath
+    );
+
+    return await this.prisma.address.update({
+      where: args.where,
+
+      data: {
+        tmpFile: tmpFile as InputJsonValue,
+      },
+    });
+  }
+
+  async downloadTmpFile<T extends Prisma.AddressFindUniqueArgs>(
+    args: Prisma.SelectSubset<T, Prisma.AddressFindUniqueArgs>
+  ): Promise<FileDownload> {
+    const { tmpFile } = await this.prisma.address.findUniqueOrThrow({
+      where: args.where,
+    });
+
+    return await this.localStorageService.downloadFile(
+      tmpFile as unknown as LocalStorageFile
+    );
+  }
+
+  async deleteTmpFile<T extends Prisma.AddressFindUniqueArgs>(
+    args: Prisma.SelectSubset<T, Prisma.AddressFindUniqueArgs>
+  ): Promise<PrismaAddress> {
+    const { tmpFile } = await this.prisma.address.findUniqueOrThrow({
+      where: args.where,
+    });
+
+    await this.localStorageService.deleteFile(
+      tmpFile as unknown as LocalStorageFile
+    );
+
+    return await this.prisma.address.update({
+      where: args.where,
+
+      data: {
+        tmpFile: Prisma.DbNull,
+      },
+    });
   }
 
   async findCustomers(
